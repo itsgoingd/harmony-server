@@ -1,0 +1,22 @@
+.application-logo {
+	display: inline-block;
+	height: 32px;
+	width: 32px;
+
+	.application-logo-image, .application-logo-initials {
+		box-shadow: 0 0 2px #ddd;
+		border-radius: 50%;
+		height: 100%;
+		width: 100%;
+	}
+
+	.application-logo-initials {
+		color: white;
+		display: inline-block;
+		font-family: "Helvetica Neue", Helvetica, sans-serif;
+		font-size: 18px;
+		font-weight: 100;
+		line-height: 32px;
+		text-align: center;
+	}
+}

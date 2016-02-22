@@ -1,0 +1,23 @@
+.userProfileEdit-screen {
+	@extend .screen;
+
+	align-items: center;
+	display: flex;
+	justify-content: center;
+
+	h3 {
+		font-weight: 200;
+	}
+
+	.userProfileEdit-form {
+		flex-basis: 320px;
+
+		input, .button {
+			width: 100%;
+		}
+	}
+
+	.userProfileEdit-form-section {
+		border-bottom: 1px solid #eee;
+	}
+}

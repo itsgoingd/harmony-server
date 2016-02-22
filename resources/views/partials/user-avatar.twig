@@ -1,0 +1,7 @@
+<span class="user-avatar {{ size ? 'user-avatar-' ~ size }}">
+	{% if user.avatar_file_name %}
+		<img class="user-avatar-image" src="{{ user.avatar.url('small') }}">
+	{% else %}
+		<span class="user-avatar-initials" style="background-color:#{{ user.color }}">{{ user.initials ?: user.getInitials() }}</span>
+	{% endif %}
+</span>

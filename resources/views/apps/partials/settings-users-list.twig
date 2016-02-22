@@ -1,0 +1,25 @@
+{% for user in users %}
+	<div class="applicationSettings-form-user">
+
+		<div class="applicationSettings-form-user-avatar">
+
+			{% include 'partials/user-avatar' with { user: user } %}
+
+		</div>
+
+		<div class="applicationSettings-form-user-email">
+
+			{{ user.email }}
+
+		</div>
+
+		<div class="applicationSettings-form-user-actions">
+
+			{% if not user.isApplicationOwner(app) %}
+				<a class="button applicationSettings-form-user-remove" data-id="{{ user.id }}" href="#"><i class="fa fa-times"></i></a>
+			{% endif %}
+
+		</div>
+
+	</div>
+{% endfor %}

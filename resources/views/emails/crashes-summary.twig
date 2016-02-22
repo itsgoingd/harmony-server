@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Harmony - crash reporting and analysis</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		{{ stylesheet('email.css') }}
+	</head>
+	<body>
+		<h1>Crashes summary for "{{ app.name }}"</h1>
+
+		{% for crash in crashes %}
+			<div class="crash-info">
+
+				<div class="crash-info-title">
+					<div class="crash-info-title-exception"><strong>{{ crash.exception }}</strong> {{ crash.message }} <span class="crash-info-title-exception-id">(#{{ crash.id }})</span></div>
+					<div class="crash-info-title-file"><strong>{{ crash.getShortFileName() }}</strong> line <strong>{{ crash.lineNumber }}</strong></div>
+				</div>
+
+				<div class="crash-info-details">
+					<a href="{{ route('crashes details', { app: crash.application.slug, crashId: crash.id }) }}">
+						Show details
+					</a>
+				</div>
+
+			</div>
+		{% endfor %}
+	</body>
+</html>

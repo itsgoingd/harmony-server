@@ -1,0 +1,44 @@
+{% extends 'layout' %}
+
+{% block content %}
+
+{% include 'partials/top-menu' %}
+
+<div class="applicationCreate-screen">
+
+	<form class="applicationCreate-form" action="{{ route('apps store') }}" method="post" enctype="multipart/form-data">
+		{{ csrf_field() }}
+
+		{% if errors %}
+			<div class="applicationCreate-form-errors">
+				{% for message in errors.all() %}
+					{{ message }}<br>
+				{% endfor %}
+			</div>
+		{% endif %}
+
+		<div class="applicationCreate-form-section">
+
+			<div class="form-group">
+				<label for="login-name">Name</label>
+				<input type="text" id="login-name" name="name" value="{{ input_old('name') }}">
+			</div>
+
+		</div>
+
+		<div class="applicationCreate-form-section">
+
+			<div class="form-group">
+				<label for="login-logo">Logo (optional)</label>
+				<input type="file" id="login-logo" name="logo">
+			</div>
+
+		</div>
+
+		<input class="button button-primary" type="submit" value="Create application">
+
+	</form>
+
+</div>
+
+{% endblock %}

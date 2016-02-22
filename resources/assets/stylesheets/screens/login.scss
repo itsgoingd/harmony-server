@@ -1,0 +1,38 @@
+.login-screen {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	height: 100%;
+
+	h1, h2, h3 {
+		font-weight: 200;
+	}
+
+	h1 {
+		margin-bottom: 5px;
+	}
+
+	h2 {
+		margin-top: 0;
+	}
+
+	.login-form {
+		flex-basis: 320px;
+		padding: 0 10px;
+
+		.login-form-errors {
+			color: #E23535;
+			margin-bottom: 18px;
+		}
+
+		input, .button {
+			width: 100%;
+		}
+
+		.login-form-create-account {
+			border-top: 1px solid #eee;
+			margin-top: 20px;
+			padding-top: 20px;
+		}
+	}
+}

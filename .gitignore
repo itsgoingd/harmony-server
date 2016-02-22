@@ -1,0 +1,11 @@
+/vendor
+/node_modules
+Homestead.yaml
+Homestead.json
+.env
+
+tests/_output/*
+public/assets/*
+public/system/*
+resources/assets/vendor/*
+tests/_support/_generated/*

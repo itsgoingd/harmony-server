@@ -1,0 +1,41 @@
+* {
+	box-sizing: border-box;
+}
+
+html {
+	font-family: Helvetica, sans-serif;
+	font-size: 14px;
+	height: 100%;
+
+	@include breakpoint($tablet-portrait) {
+		font-size: 16px;
+	}
+}
+
+body {
+	height: 100%;
+	margin: 0;
+}
+
+a {
+	color: #1B9FE0;
+	text-decoration: none;
+}
+
+.hidden {
+	display: none !important;
+}
+
+.screen {
+	padding: 60px 10px 20px;
+
+	@include breakpoint($tablet-portrait) {
+		margin: 0 auto;
+		padding: 0 0 20px;
+		width: 80%;
+	}
+
+	@include breakpoint($tablet-landscape) {
+		width: 70%;
+	}
+}

@@ -1,0 +1,140 @@
+.topMenu {
+	align-items: center;
+	background: rgba(white, 0.95);
+	box-shadow: 0 0 10px #ccc;
+	display: flex;
+	height: 50px;
+	justify-content: space-between;
+	padding: 9px;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 420;
+
+	@include breakpoint($tablet-portrait) {
+		border-bottom: 1px solid #ddd;
+		box-shadow: none;
+		height: 70px;
+		margin: 20px auto;
+		padding: 0 10px;
+		position: static;
+		width: 80%;
+	}
+
+	@include breakpoint($tablet-landscape) {
+		width: 70%;
+	}
+
+	a {
+		color: #000;
+		text-decoration: none;
+	}
+
+	.topMenu-application {
+		align-items: center;
+		display: flex;
+	}
+
+	.topMenu-application-menu {
+		align-items: center;
+		display: flex;
+		font-size: 130%;
+		font-weight: 200;
+
+		.application-logo {
+			margin-right: 10px;
+		}
+
+		.topMenu-application-menu-name {
+			display: none;
+
+			@include breakpoint($tablet-portrait) {
+				display: inline;
+			}
+		}
+
+		.fa {
+			font-size: 100%;
+
+			@include breakpoint($tablet-portrait) {
+				margin-left: 8px;
+			}
+		}
+	}
+
+	.topMenu-applicationSubmenu {
+		flex: 1;
+		margin: 0 15px;
+
+		a {
+			color: #888;
+			padding: 0 10px;
+
+			&:hover {
+				color: #000;
+			}
+		}
+	}
+
+	.topMenu-user {
+		align-items: center;
+		display: flex;
+	}
+}
+
+.topMenu-applications {
+	background: rgba(white, 0.95);
+	border-radius: 0 0 3px 3px;
+	box-shadow: 0 0 10px #ccc;
+	display: flex;
+	flex-direction: column;
+	font-size: 120%;
+	height: calc(100% - 50px);
+	position: fixed;
+	text-align: center;
+	top: 50px;
+	width: 100%;
+	z-index: 360;
+
+	@include breakpoint($tablet-portrait) {
+		height: auto;
+		left: 10%;
+		min-width: 300px;
+		position: absolute;
+		top: 90px;
+		width: auto;
+
+		.topMenu-applications-application:last-child {
+			border-bottom: none;
+		}
+	}
+
+	@include breakpoint($tablet-landscape) {
+		left: 15%;
+	}
+
+	.topMenu-applications-application {
+		align-items: center;
+		border-bottom: 1px solid #eee;
+		color: #000;
+		display: flex;
+		font-size: 110%;
+		font-weight: 200;
+		padding: 12px;
+
+		.application-logo {
+			margin-right: 10px;
+		}
+
+		&:hover, &:active {
+			background: #f6f6f6;
+		}
+	}
+
+	.topMenu-applications-newApplication {
+		.application-logo-initials {
+			font-size: 24px;
+			line-height: normal;
+		}
+	}
+}

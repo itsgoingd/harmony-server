@@ -1,0 +1,12 @@
+{
+  "name": "itsgoingd/harmony-server",
+  "dependencies": {
+    "font-awesome": "~4.5.0",
+    "jquery": "~2.2.0",
+    "prism": "git@github.com:LeaVerou/prism.git#gh-pages"
+  },
+  "private": true,
+  "devDependencies": {
+    "breakpoint-sass": "~2.6.1"
+  }
+}

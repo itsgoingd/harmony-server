@@ -1,0 +1,56 @@
+{
+	"name": "itsgoingd/harmony-server",
+	"description": "Harmony - a crash logging and analysis service.",
+	"keywords": ["exception", "error", "logging", "laravel"],
+	"license": "MIT",
+	"type": "project",
+	"require": {
+		"php": ">=7.0.0",
+		"laravel/framework": "5.2.*",
+		"rcrowe/twigbridge": "^0.9.1",
+		"cviebrock/eloquent-sluggable": "^3.1",
+		"codesleeve/laravel-stapler": "^1.0",
+		"erusev/parsedown": "^1.6",
+		"itsgoingd/harmony": "dev-master",
+		"itsgoingd/clockwork": "~1.10"
+	},
+	"require-dev": {
+		"codeception/codeception": "*",
+		"fzaninotto/faker": "~1.4"
+	},
+	"autoload": {
+		"classmap": [
+			"database"
+		],
+		"psr-4": {
+			"Harmony\\": "app/"
+		}
+	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/itsgoingd/harmony.git"
+		}
+	],
+	"scripts": {
+		"post-root-package-install": [
+			"php -r \"copy('.env.example', '.env');\""
+		],
+		"post-create-project-cmd": [
+			"php artisan key:generate"
+		],
+		"post-install-cmd": [
+			"php artisan clear-compiled",
+			"php artisan optimize"
+		],
+		"pre-update-cmd": [
+			"php artisan clear-compiled"
+		],
+		"post-update-cmd": [
+			"php artisan optimize"
+		]
+	},
+	"config": {
+		"preferred-install": "dist"
+	}
+}

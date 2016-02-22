@@ -1,0 +1,115 @@
+{% extends 'layout' %}
+
+{% block content %}
+
+{% include 'partials/top-menu' %}
+
+<div class="applicationSettings-screen">
+
+	{% if signedIn.isApplicationOwner(app) %}
+		<form class="applicationSettings-form" action="{{ route('apps settings update', { app: app.slug }) }}" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="_method" value="put">
+			{{ csrf_field() }}
+
+			{% if errors %}
+				<div class="applicationSettings-form-errors">
+					{% for message in errors.all() %}
+						{{ message }}<br>
+					{% endfor %}
+				</div>
+			{% endif %}
+
+			<div class="applicationSettings-form-section">
+
+				<div class="form-group">
+					<label for="applicationSettings-name">Name</label>
+					<input type="text" id="applicationSettings-name" name="name" value="{{ input_old('name', app.name) }}">
+				</div>
+
+			</div>
+
+			<div class="applicationSettings-form-section">
+
+				<h3>Change logo</h3>
+
+				<div class="form-group">
+					<label for="applicationSettings-logo">Logo (optional)</label>
+					<input type="file" id="applicationSettings-logo" name="logo">
+				</div>
+
+				<input class="button button-primary" type="submit" value="Save changes">
+
+			</div>
+		</form>
+	{% endif %}
+
+	<form class="applicationSettings-form" action="{{ route('apps my-settings update', { app: app.slug }) }}" method="post">
+		<input type="hidden" name="_method" value="put">
+		{{ csrf_field() }}
+
+		<div class="applicationSettings-form-section">
+
+			<h3>Email notifications</h3>
+
+			<div class="form-group">
+				<label for="applicationSettings-emailNotifications">Send email notifications about crashes</label>
+				<select id="applicationSettings-emailNotifications" name="emailNotifications">
+					<option value="disabled">Never</option>
+					<option value="asap" {{ user.pivot.emailNotifications == 'asap' ? 'selected' }}>Immidiately</option>
+					<option value="hourly" {{ user.pivot.emailNotifications == 'hourly' ? 'selected' }}>Hourly</option>
+					<option value="daily" {{ user.pivot.emailNotifications == 'daily' ? 'selected' }}>Daily</option>
+				</select>
+			</div>
+
+			<input class="button button-primary" type="submit" value="Save changes">
+
+		</div>
+	</form>
+
+	<div class="applicationSettings-form-section">
+
+		<h3>Users</h3>
+
+		<div class="applicationSettings-form-users">
+
+			{% include 'apps/partials/settings-users-list' with { users: app.users } %}
+
+		</div>
+
+		<div class="applicationSettings-form-user applicationSettings-form-newUser hidden">
+
+			<div class="applicationSettings-form-user-avatar">
+
+				{% include 'partials/user-avatar' with { user: { color: 'ccc', initials: '?' } } %}
+
+			</div>
+
+			<div class="applicationSettings-form-user-email">
+
+				<input type="text" class="applicationSettings-form-newUser-emailInput" placeholder="email">
+
+			</div>
+
+			<div class="applicationSettings-form-user-actions">
+
+				<a class="button applicationSettings-form-newUser-add" href="#"><i class="fa fa-check"></i></a>
+
+			</div>
+
+		</div>
+
+		<div class="applicationSettings-form-newUser-error hidden"></div>
+
+		{% if signedIn.isApplicationOwner(app) %}
+			<a class="button button-primary applicationSettings-form-addUser" href="#">Add user</a>
+		{% endif %}
+
+	</div>
+
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>$(function(){ new AppSettingsView({ app: '{{ app.slug|escape('js') }}' }) })</script>
+{% endblock %}

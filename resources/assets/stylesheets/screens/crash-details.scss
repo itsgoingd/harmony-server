@@ -1,0 +1,302 @@
+.crash-screen {
+	@extend .screen;
+
+	.crash-info {
+		align-items: center;
+		display: flex;
+		font-size: 100%;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		line-height: 1.4;
+		margin-top: 30px;
+	}
+
+	.crash-info-title {
+		flex-basis: 100%;
+		margin-bottom: 20px;
+		margin-right: 5px;
+		word-break: break-word;
+
+		strong {
+			color: #389BE6;
+			font-weight: normal;
+		}
+
+		.crash-info-title-exception {
+			margin-bottom: 10px;
+		}
+
+		.crash-info-title-exception-id {
+			color: #ccc;
+			font-size: 90%;
+		}
+
+		.crash-info-title-file {
+			font-size: 90%;
+		}
+	}
+
+	.crash-info-count {
+		flex: 2;
+		font-size: 90%;
+		margin: 0 5px;
+		text-align: center;
+
+		small {
+			font-size: 110%;
+			font-variant: small-caps;
+		}
+	}
+
+	.crash-info-last {
+		flex: 2;
+		font-size: 90%;
+		margin-left: 5px;
+		text-align: center;
+
+		small {
+			font-size: 110%;
+			font-variant: small-caps;
+		}
+	}
+
+	.crash-info-archived {
+		flex-basis: 100%;
+		font-size: 90%;
+		margin-left: 5px;
+		margin-top: 15px;
+		text-align: center;
+
+		@include breakpoint($tablet-portrait) {
+			flex-basis: auto;
+			flex: 2;
+		}
+
+		small {
+			font-size: 110%;
+			font-variant: small-caps;
+		}
+	}
+
+	.crash-navigation {
+		display: flex;
+		justify-content: space-between;
+		margin: 40px auto;
+		max-width: 380px;
+		width: 100%;
+
+		a {
+			display: block;
+			padding: 5px 8px;
+		}
+
+		.active, :hover {
+			background: #1B9FE0;
+			border-radius: 4px;
+			color: #fff;
+		}
+	}
+
+	.crash-comments {
+		@include breakpoint($tablet-portrait) {
+			margin: 0 auto;
+			width: 70%;
+		}
+	}
+
+	.crash-noComments {
+		color: #999;
+		font-size: 110%;
+		text-align: center;
+		padding: 30px 0 60px;
+	}
+
+	.crash-comment {
+		border-bottom: 1px solid #eee;
+		margin: 30px 0;
+		padding-bottom: 30px;
+
+		.crash-comment-info {
+			align-items: center;
+			display: flex;
+			font-size: 85%;
+			margin-bottom: 20px;
+
+			.crash-comment-info-who {
+				flex: 1;
+			}
+
+			.user-avatar {
+				margin-right: 5px;
+			}
+		}
+	}
+
+	.crash-newComment {
+		.crash-newComment-info {
+			font-size: 90%;
+			margin-bottom: 15px;
+
+			.user-avatar {
+				margin-right: 5px;
+			}
+		}
+
+		textarea {
+			min-height: 90px;
+			width: 100%;
+		}
+
+		.button {
+			display: block;
+			margin: 20px auto;
+			width: 50%;
+		}
+	}
+
+	.crash-callStack {
+		overflow: auto;
+	}
+
+	.crash-callStack-item {
+		font-size: 110%;
+		padding: 10px 0;
+
+		&.crash-callStack-item-vendor {
+			font-size: 85%;
+		}
+
+		.crash-callStack-item-info {
+			align-items: center;
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.crash-callStack-item-number {
+			display: none;
+			flex-basis: 50px;
+			flex-shrink: 0;
+			text-align: center;
+
+			@include breakpoint($tablet-portrait) {
+				display: block;
+			}
+		}
+
+		.crash-callStack-item-content {
+			flex: 1;
+
+			.crash-callStack-item-content-call {
+				strong {
+					color: #389BE6;
+					font-weight: normal;
+				}
+			}
+
+			.crash-callStack-item-content-file {
+				font-size: 90%;
+			}
+		}
+
+		.crash-callStack-item-content-call-arguments-show {
+			cursor: pointer;
+			font-size: 80%;
+			padding: 0 5px;
+		}
+
+		.crash-callStack-item-actions {
+			flex-basis: 32px;
+			flex-shrink: 0;
+			text-align: center;
+
+			.crash-callStack-item-actions-showPreview-disabled {
+				color: #ccc;
+			}
+		}
+
+		.crash-callStack-item-filePreview {
+			flex-basis: 100%;
+
+			pre {
+				font-size: 75%;
+				padding: 0.5em 0 0.5em 4em;
+
+				.line-highlight {
+					margin-top: 0.5em;
+				}
+			}
+		}
+	}
+
+	.crash-request {
+		@include breakpoint($notebook) {
+			display: flex;
+			justify-content: space-between;
+		}
+	}
+
+	.crash-request-headers,
+	.crash-request-data {
+		word-break: break-all;
+
+		@include breakpoint($notebook) {
+			flex-basis: 48%;
+		}
+	}
+
+	.crash-request-headers-key,
+	.crash-request-data-key {
+		color: #389BE6;
+		display: block;
+		font-size: 90%;
+		padding-bottom: 5px;
+	}
+
+	.crash-request-headers-value,
+	.crash-request-data-value {
+		padding-bottom: 10px;
+	}
+
+	.crash-queryLog-item {
+		align-items: center;
+		border-bottom: 1px solid #eee;
+		display: flex;
+		font-size: 95%;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		padding: 15px 0;
+
+		@include breakpoint($tablet-portrait) {
+			flex-wrap: nowrap;
+		}
+	}
+
+	.crash-queryLog-item-query {
+		color: #666;
+		flex-basis: 100%;
+		margin-right: 5px;
+		margin-bottom: 10px;
+
+		@include breakpoint($tablet-portrait) {
+			flex: 10;
+			margin-bottom: 0;
+		}
+
+		.keyword {
+			color: #000;
+			text-transform: uppercase;
+		}
+	}
+
+	.crash-queryLog-item-time {
+		flex: 1;
+		margin: 0 5px;
+		text-align: center;
+	}
+
+	.crash-queryLog-item-connection {
+		flex: 1;
+		margin-left: 5px;
+		text-align: center;
+	}
+}

@@ -1,0 +1,42 @@
+{% extends 'layout' %}
+
+{% block content %}
+
+<div class="login-screen">
+
+	<form class="login-form" action="{{ route('sign-up request') }}" method="post">
+		{{ csrf_field() }}
+
+		<h1>Harmony</h1>
+		<h2>Crash reporting and analysis.</h2>
+
+		<h3>Sign up</h3>
+
+		{% if error %}
+			<div class="login-form-errors">
+				{{ error|nl2br }}
+			</div>
+		{% endif %}
+
+		<div class="form-group">
+			<label for="login-email">Email</label>
+			<input type="text" id="login-email" name="email" value="{{ input_old('email') }}">
+		</div>
+
+		<div class="form-group">
+			<label for="login-password">Password</label>
+			<input type="password" id="login-password" name="password">
+		</div>
+
+		<div class="form-group">
+			<label for="login-passwordConfirmation">Password (confirmation)</label>
+			<input type="password" id="login-passwordConfirmation" name="password_confirmation">
+		</div>
+
+		<input class="button button-primary" type="submit" value="Sign up">
+
+	</form>
+
+</div>
+
+{% endblock %}

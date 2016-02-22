@@ -1,0 +1,122 @@
+{% extends 'layout' %}
+
+{% block content %}
+
+{% include 'partials/top-menu' %}
+
+<div class="application-screen">
+
+	<form class="application-filterCrashes-form">
+
+		<div class="application-filterCrashes">
+
+			<div class="application-filterCrashes-search">
+
+				<input type="search" name="search" placeholder="Search" value="{{ filter.search }}">
+				<i class="fa fa-search"></i>
+
+			</div>
+
+			<div class="application-filterCrashes-order">
+
+				<div class="application-filterCrashes-order-select">
+
+					<input class="application-filterCrashes-orderInput" type="hidden" name="order" value="{{ filter.order ?: 'latest' }}">
+					<input class="application-filterCrashes-showArchivedInput" type="hidden" name="showArchived" value="{{ filter.showArchived ? '1' : '0' }}">
+
+					<a class="application-filterCrashes-order-select-value" href="#">
+						<span class="application-filterCrashes-order-select-value-text">
+							{% if filter.order == 'oldest' %}
+								Oldest
+							{% elseif filter.order == 'most-frequent' %}
+								Most frequent
+							{% else %}
+								Latest
+							{% endif %}
+						</span> <i class="fa fa-angle-down"></i>
+					</a>
+
+					<div class="application-filterCrashes-order-options hidden">
+
+						<a class="application-filterCrashes-order-options-option" data-order="latest" href="#">
+							Latest
+						</a>
+						<a class="application-filterCrashes-order-options-option" data-order="oldest" href="#">
+							Oldest
+						</a>
+						<a class="application-filterCrashes-order-options-option" data-order="most-frequent" href="#">
+							Most frequent
+						</a>
+						<a class="application-filterCrashes-order-options-option {{ filter.showArchived ? 'active' }}" data-show-archived href="#">
+							Show archived
+						</a>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</form>
+
+	<div class="application-crashes">
+
+		{% for crash in crashes %}
+
+			<a href="{{ route('crashes details', { app: app.slug, crash: crash.id }) }}">
+				<div class="application-crashes-crash {{ crash.isArchived() ? 'application-crashes-crash-archived' }}">
+
+					<div class="application-crashes-crash-title">
+						<div class="application-crashes-crash-title-exception"><strong>{{ crash.exception }}</strong> {{ str_limit(crash.message, 300) }} <span class="application-crashes-crash-title-exception-id">(#{{ crash.id }})</span></div>
+						<div class="application-crashes-crash-title-file"><strong>{{ crash.getShortFileName() }}</strong> line <strong>{{ crash.lineNumber }}</strong></div>
+					</div>
+
+					<div class="application-crashes-crash-count">
+						{{ crash.instances.count() }}<br>
+						<small>crashes</small>
+					</div>
+
+					{% if crash.isArchived() %}
+						<div class="application-crashes-crash-archivedAt">
+							{{ crash.archivedAt.diffForHumans() }}<br>
+							<small>archived</small>
+						</div>
+					{% else %}
+						<div class="application-crashes-crash-last">
+							{{ crash.getLastInstance().created_at.diffForHumans() }}<br>
+							<small>last</small>
+						</div>
+					{% endif %}
+
+				</div>
+			</a>
+
+		{% else %}
+
+			<div class="application-crashes-empty">
+				{% if filter.search %}
+					<p>No crashes found!</p>
+				{% else %}
+					<p>No crashes yet!</p>
+					<p>
+						<small>To add Harmony support to your application follow instructions in the <a href="https://github.com/itsgoingd/harmony">Harmony client github repository</a>.</small>
+					</p>
+					<p>
+						<small>Your api key for this application is <code>{{ app.apiKey }}</code>.</small>
+					</p>
+				{% endif %}
+			</div>
+
+		{% endfor %}
+
+	</div>
+
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>$(function(){ new AppCrashesView({ app: '{{ app.slug|escape('js') }}' }) })</script>
+{% endblock %}

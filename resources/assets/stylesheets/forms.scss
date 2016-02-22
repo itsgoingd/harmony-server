@@ -1,0 +1,64 @@
+input[type="text"], input[type="password"], input[type="search"], input[type="email"], select, textarea {
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 16px;
+	padding: 8px;
+}
+
+select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
+.button {
+	background: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	color: #111;
+	display: inline-block;
+	font-size: 16px;
+	padding: 8px;
+	text-align: center;
+	text-decoration: none;
+
+	&:hover {
+		border-color: #999;
+	}
+
+	&:active {
+		background: #ccc;
+		border-color: #999;
+	}
+
+	&-disabled {
+		color: #ccc;
+		cursor: default;
+
+		&:hover {
+			border-color: #ccc;
+		}
+
+		&:active {
+			background: none;
+			border-color: #ccc;
+		}
+	}
+}
+
+.form-group {
+	margin-bottom: 20px;
+
+	label {
+		display: block;
+		font-size: 90%;
+		margin-bottom: 5px;
+	}
+}
+
+.form-section-label {
+	border-bottom: 1px solid #ccc;
+	font-size: 120%;
+	margin-bottom: 15px;
+	padding-bottom: 2px;
+}

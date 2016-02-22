@@ -1,0 +1,61 @@
+{% extends 'layout' %}
+
+{% block content %}
+
+{% include 'partials/top-menu' %}
+
+<div class="userProfileEdit-screen">
+
+	<form class="userProfileEdit-form" action="{{ route('profile update') }}" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="_method" value="put">
+		{{ csrf_field() }}
+
+		{% if error %}
+			<div class="userProfileEdit-form-errors">
+				{{ error|nl2br }}
+			</div>
+		{% endif %}
+
+		<div class="userProfileEdit-form-section">
+
+			<div class="form-group">
+				<label for="userProfileEdit-email">Email</label>
+				<input type="email" id="userProfileEdit-email" name="email" value="{{ input_old('email', signedIn.email) }}">
+			</div>
+
+		</div>
+
+		<div class="userProfileEdit-form-section">
+
+			<h3>Change avatar</h3>
+
+			<div class="form-group">
+				<label for="userProfileEdit-avatar">Avatar (optional)</label>
+				<input type="file" id="userProfileEdit-avatar" name="avatar">
+			</div>
+
+		</div>
+
+		<div class="userProfileEdit-form-section">
+
+			<h3>Change password</h3>
+
+			<div class="form-group">
+				<label for="userProfileEdit-password">Password</label>
+				<input type="password" id="userProfileEdit-password" name="password">
+			</div>
+
+			<div class="form-group">
+				<label for="userProfileEdit-passwordConfirmation">Password confirmation</label>
+				<input type="password" id="userProfileEdit-passwordConfirmation" name="password_confirmation">
+			</div>
+
+		</div>
+
+		<input class="button button-primary" type="submit" value="Update my profile">
+
+	</form>
+
+</div>
+
+{% endblock %}

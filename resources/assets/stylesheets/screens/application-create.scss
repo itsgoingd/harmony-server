@@ -1,0 +1,31 @@
+.applicationCreate-screen {
+	@extend .screen;
+
+	align-items: center;
+	display: flex;
+	justify-content: center;
+
+	h1 {
+		font-weight: 200;
+	}
+
+	.applicationCreate-form {
+		flex-basis: 320px;
+
+		input, .button {
+			width: 100%;
+		}
+	}
+
+	.applicationCreate-form-section {
+		border-bottom: 1px solid #eee;
+		margin-bottom: 20px;
+	}
+}
+
+.applicationCreate-logo {
+	.application-logo-initials {
+		font-size: 24px;
+		line-height: normal;
+	}
+}

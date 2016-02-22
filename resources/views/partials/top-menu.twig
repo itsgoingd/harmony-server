@@ -1,0 +1,49 @@
+<div class="topMenu {{ not app ? 'applicationCreate-logo' }}">
+	<span class="topMenu-application">
+		<a class="topMenu-application-menu" href="#">
+			{% if app %}
+				{% include 'apps/partials/app-logo' %}
+				<span class="topMenu-application-menu-name">
+					{{ app.name }}
+				</span>
+			{% else %}
+				{% include 'apps/partials/app-logo' with { app: { color: '10D416', initials: '+', class: '' } } %}
+				<span class="topMenu-application-menu-name">
+					New application
+				</span>
+			{% endif %}
+			<i class="fa fa-caret-down"></i>
+		</a>
+	</span>
+	{% if app %}
+		<span class="topMenu-applicationSubmenu">
+			<a href="{{ route('apps crashes', { app: app.slug }) }}">
+				Crashes
+			</a>
+			<a href="{{ route('apps settings', { app: app.slug }) }}">
+				Settings
+			</a>
+		</span>
+	{% endif %}
+	<span class="topMenu-user">
+		<a class="topMenu-user-menu" href="{{ route('profile') }}">
+			{% include 'partials/user-avatar' with { user: signedIn } %}
+		</a>
+	</span>
+</div>
+
+<div class="topMenu-applications hidden">
+
+	{% for app in signedIn.applications %}
+		<a class="topMenu-applications-application" href="{{ route('apps crashes', { app: app.slug }) }}">
+			{% include 'apps/partials/app-logo' %}
+			{{ app.name }}
+		</a>
+	{% endfor %}
+
+	<a class="topMenu-applications-application topMenu-applications-newApplication" href="{{ route('apps create') }}">
+		{% include 'apps/partials/app-logo' with { app: { color: '10D416', initials: '+' } } %}
+		New application
+	</a>
+
+</div>

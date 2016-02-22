@@ -1,0 +1,7 @@
+<span class="application-logo">
+	{% if app.logo_file_name %}
+		<img class="application-logo-image" src="{{ app.logo.url('small') }}">
+	{% else %}
+		<span class="application-logo-initials" style="background-color:#{{ app.color }}">{{ app.initials ?: app.getInitials() }}</span>
+	{% endif %}
+</span>

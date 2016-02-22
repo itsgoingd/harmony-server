@@ -1,0 +1,195 @@
+{% extends 'layout' %}
+
+{% from _self import arguments %}
+
+{% block content %}
+
+{% include 'partials/top-menu' %}
+
+<div class="crash-screen">
+
+	<div class="crash-info">
+
+		<div class="crash-info-title">
+			<div class="crash-info-title-exception"><strong>{{ crash.exception }}</strong> {{ crash.message }} <span class="crash-info-title-exception-id">(#{{ crash.id }})</span></div>
+			<div class="crash-info-title-file"><strong>{{ crash.getShortFileName() }}</strong> line <strong>{{ crash.lineNumber }}</strong></div>
+		</div>
+
+		<div class="crash-info-count">
+			{{ crash.instances.count() }}<br>
+			<small>crashes</small>
+		</div>
+
+		<div class="crash-info-last">
+			{{ crash.getLastInstance().created_at.diffForHumans() }}<br>
+			<small>last</small>
+		</div>
+
+		<div class="crash-info-archived">
+			{% if crash.isArchived() %}
+				{{ crash.archivedAt.diffForHumans() }}
+				by {% include 'partials/user-avatar' with { user: crash.archiver, size: 'small' } %} {{ crash.archiver.email }}
+				<br>
+			{% else %}
+				not archived
+				(<a href="{{ route('crashes archive', { app: app.slug, crashId: crash.id }) }}" data-method="post" class="crash-info-archived-archive">archive</a>)
+				<br>
+			{% endif %}
+			<small>archived</small>
+		</div>
+
+	</div>
+
+	<div class="crash-navigation">
+		<a href="#comments" class="{{ crash.comments|length ? 'active' }}">Comments</a>
+		<a href="#call-stack" class="{{ not crash.comments|length ? 'active' }}">Call Stack</a>
+		<a href="#request">Request</a>
+		<a href="#query-log">Queries</a>
+	</div>
+
+	<div class="crash-content {{ not crash.comments|length ? 'hidden' }}" id="comments">
+
+		<div class="crash-comments">
+
+			{% for comment in crash.comments %}
+
+				<div class="crash-comment" id="{{ loop.last ? 'lastComment' }}">
+
+					<div class="crash-comment-info">
+						<div class="crash-comment-info-who">
+							{% include 'partials/user-avatar' with { user: comment.poster, size: 'small' } %}
+							{{ comment.poster.email }}
+						</div>
+						<div class="crash-comment-info-when">
+							{{ comment.created_at.diffForHumans() }}
+						</div>
+					</div>
+
+					<div class="crash-comment-what">
+						{{ comment.message|escape('html')|markdown }}
+					</div>
+
+				</div>
+
+			{% else %}
+
+				<div class="crash-noComments">
+					No comments have been posted.
+				</div>
+
+			{% endfor %}
+
+			<form action="{{ route('crashes comments post', { app: app.slug, crash: crash.id }) }}" method="post">
+				{{ csrf_field() }}
+
+				<div class="crash-newComment">
+
+					<div class="crash-newComment-info">
+						{% include 'partials/user-avatar' with { user: signedIn, size: 'small' } %}
+						{{ signedIn.email }}
+					</div>
+
+					<div class="crash-newComment-what">
+						<textarea name="message" placeholder="New comment"></textarea>
+					</div>
+
+					<input class="button button-primary" type="submit" value="Post">
+
+				</div>
+
+			</form>
+
+		</div>
+
+	</div>
+
+	<div class="crash-content {{ crash.comments|length ? 'hidden' }}" id="call-stack">
+		<div class="crash-callStack">
+			{% for item in instance.getCallStack() %}
+				<div class="crash-callStack-item {{ item.isVendor ? 'crash-callStack-item-vendor' }}">
+					<div class="crash-callStack-item-info">
+						<div class="crash-callStack-item-number">
+							{{ item.number }}
+						</div>
+						<div class="crash-callStack-item-content">
+							<span class="crash-callStack-item-content-call">
+								<strong>{{ item.call }}(<span class="crash-callStack-item-content-call-arguments">{{ arguments(item.args) }}</span>)</strong>
+							</span>
+							{% if item.fileName %}
+								<br>
+								<span class="crash-callStack-item-content-file">
+									{{ item.shortFileName }} line {{ item.lineNumber }}
+								</span>
+							{% endif %}
+						</div>
+						<div class="crash-callStack-item-actions">
+							<a class="crash-callStack-item-actions-showPreview {{ not item.filePreview ? 'crash-callStack-item-actions-showPreview-disabled' }}" href="#"><i class="fa fa-file-o"></i></a>
+						</div>
+					</div>
+					<div class="crash-callStack-item-filePreview hidden">
+						{% if item.filePreview %}
+							<pre class="line-numbers" data-start="{{ item.filePreviewRange.start }}" data-line="{{ item.lineNumber }}" data-line-offset="{{ item.filePreviewRange.start - 1 }}"><code class="language-php">{{ item.filePreview|join("\n") }}</code></pre>
+						{% endif %}
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
+	<div class="crash-content crash-request hidden" id="request">
+		<div class="crash-request-headers">
+			{% for key, values in instance.getRequestHeaders() %}
+				<div class="crash-request-headers-key">
+					{{ key }}
+				</div>
+				<div class="crash-request-headers-value">
+					{% for value in values %}
+						{% if value %}{{ value }}{% else %}&nbsp;{% endif %}
+						{{ not loop.last ? '<br>' }}
+					{% endfor %}
+				</div>
+			{% endfor %}
+		</div>
+		<div class="crash-request-data">
+			{% for key, value in instance.getRequestData() %}
+				<div class="crash-request-data-key">
+					{{ key }}
+				</div>
+				<div class="crash-request-data-value">
+					{% if value %}{{ value }}{% else %}&nbsp;{% endif %}
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
+	<div class="crash-content hidden" id="query-log">
+		<div class="crash-queryLog">
+			{% for item in instance.getQueryLog() %}
+				<div class="crash-queryLog-item">
+					<div class="crash-queryLog-item-query">
+						{{ item.decoratedQuery|raw }}
+					</div>
+					<div class="crash-queryLog-item-time">
+						{{ item.time }}s
+					</div>
+					<div class="crash-queryLog-item-connection">
+						{{ item.connection }}
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+$(function(){ new CrashDetailsView() })
+</script>
+{% endblock %}
+
+{% macro arguments(args) %}
+{% for arg in args %}{% if arg[0] == 'array' %}[ {{ _self.arguments(arg[1]) }} ]{% elseif arg[0] == 'string' %}"{{ arg[1] }}"{% else %}{{ arg[1] }}{% endif %}{{ not loop.last ? ', ' }}{% endfor %}
+{% endmacro %}

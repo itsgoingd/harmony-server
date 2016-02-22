@@ -1,0 +1,175 @@
+.application-screen {
+	@extend .screen;
+
+	padding-left: 0;
+	padding-right: 0;
+
+	.application-filterCrashes {
+		display: flex;
+		margin: 10px 0 5px;
+		padding: 0 10px;
+
+		@include breakpoint($tablet-landscape) {
+			margin-bottom: 15px;
+		}
+
+		.application-filterCrashes-search {
+			flex: 1;
+
+			input {
+				border-radius: 12px;
+				font-size: 12px;
+				max-width: 200px;
+				padding: 4px 12px 4px 2px;
+				width: 100%;
+			}
+
+			input:hover + .fa, input:focus + .fa {
+				display: none;
+			}
+
+			.fa {
+				color: #ccc;
+				font-size: 12px;
+				margin-left: -28px;
+			}
+		}
+
+		.application-filterCrashes-order {
+			align-items: center;
+			display: flex;
+
+			.application-filterCrashes-order-select {
+				position: relative;
+			}
+
+			.application-filterCrashes-order-options {
+				background: #fff;
+				border-radius: 3px;
+				box-shadow: 0 0 3px #ccc;
+				margin-top: 10px;
+				position: absolute;
+				right: -10px;
+				width: 320px;
+
+				@include breakpoint($tablet-portrait) {
+					width: 140px;
+				}
+
+				a {
+					border-bottom: 1px solid #eee;
+					display: block;
+					padding: 10px 12px;
+
+					&:hover, &.active {
+						background: #f6f6f6;
+					}
+				}
+			}
+		}
+	}
+
+	.application-crashes {
+		a {
+			display: block;
+		}
+
+		a:hover, a:active {
+			background: #f6f6f6;
+			border-radius: 3px;
+		}
+	}
+
+	.application-crashes-crash {
+		align-items: center;
+		border-bottom: 1px solid #eee;
+		color: black;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		line-height: 1.4;
+		padding: 15px 10px;
+
+		@include breakpoint($tablet-portrait) {
+			flex-wrap: nowrap;
+		}
+
+		&-archived {
+			color: #aaa;
+
+			strong {
+				color: #69A8D8 !important;
+			}
+		}
+	}
+
+	.application-crashes-crash-title {
+		flex-basis: 100%;
+		font-size: 95%;
+		margin-bottom: 10px;
+		margin-right: 5px;
+		word-break: break-word;
+
+		@include breakpoint($tablet-portrait) {
+			flex: 12;
+			margin-bottom: 0;
+		}
+
+		strong {
+			color: #389BE6;
+			font-size: 110%;
+			font-weight: normal;
+		}
+
+		.application-crashes-crash-title-exception-id {
+			color: #ccc;
+			font-size: 90%;
+		}
+
+		.application-crashes-crash-title-file {
+			font-size: 80%;
+		}
+	}
+
+	.application-crashes-crash-count {
+		flex: 1;
+		font-size: 90%;
+		margin: 0 5px;
+		text-align: center;
+
+		small {
+			font-size: 110%;
+			font-variant: small-caps;
+		}
+	}
+
+	.application-crashes-crash-last,
+	.application-crashes-crash-archivedAt {
+		flex: 2;
+		font-size: 90%;
+		margin-left: 5px;
+		text-align: center;
+
+		small {
+			font-size: 110%;
+			font-variant: small-caps;
+		}
+	}
+
+	.application-crashes-empty {
+		color: #666;
+		font-size: 150%;
+		font-weight: 200;
+		padding: 30px 0;
+		text-align: center;
+
+		a {
+			display: inline;
+		}
+
+		small {
+			color: #999;
+			font-size: 70%;
+		}
+	}
+}

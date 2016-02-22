@@ -1,0 +1,80 @@
+{% extends 'layout' %}
+
+{% block content %}
+
+{% include 'partials/top-menu' %}
+
+<div class="userProfile-screen">
+
+	<div class="userProfile-avatar">
+
+		{% include 'partials/user-avatar' with { user: signedIn, size: 'large' } %}
+
+	</div>
+
+	<div class="userProfile-email">
+
+		{{ signedIn.email }}
+
+	</div>
+
+	<div class="userProfile-apps">
+
+		<h2>Applications</h2>
+
+		{% for app in signedIn.applications %}
+
+			<div class="userProfile-apps-app">
+
+				<div class="userProfile-apps-app-name">
+					{% include 'apps/partials/app-logo' with { application: app } %}
+					{{ app.name }}
+				</div>
+
+				{% if signedIn.isApplicationOwner(app) %}
+
+					<div class="userProfile-apps-app-apiKey">
+						<code>{{ app.apiKey }}</code><br>
+						<small>api key</small>
+					</div>
+
+					<div class="userProfile-apps-app-created">
+						{{ app.created_at.toFormattedDateString() }}<br>
+						<small>created</small>
+					</div>
+
+				{% else %}
+
+					<div class="userProfile-apps-app-added">
+						{{ app.pivot.created_at.toFormattedDateString() }}<br>
+						<small>added</small>
+					</div>
+
+				{% endif %}
+
+			</div>
+
+		{% else %}
+
+			<div class="userProfile-apps-empty">
+				No applications yet!
+			</div>
+
+		{% endfor %}
+
+	</div>
+
+	<div class="userProfile-actions">
+
+		<p>
+			<a class="button" href="{{ route('profile edit') }}">Edit profile</a>
+		</p>
+		<p>
+			<a class="button" href="{{ route('sign-out') }}">Sign out</a>
+		</p>
+
+	</div>
+
+</div>
+
+{% endblock %}
