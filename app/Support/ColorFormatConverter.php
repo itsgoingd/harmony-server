@@ -4,6 +4,10 @@ class ColorFormatConverter
 {
 	public static function hslToRgb($h, $s, $l)
 	{
+		$h /= 360;
+		$s /= 100;
+		$l /= 100;
+
 		if ($s == 0) {
 			return [ $l, $l, $l ];
 		}
