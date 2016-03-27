@@ -48,7 +48,7 @@ class Crash extends Model
 	public function getShortFileName()
 	{
 		if ($this->application->path) {
-			return str_replace("{$this->application->path}/", '', $this->fileName);
+			return str_replace(rtrim($this->application->path, '/') . '/', '', $this->fileName);
 		} else {
 			return $this->fileName;
 		}
