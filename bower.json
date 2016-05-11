@@ -3,7 +3,7 @@
   "dependencies": {
     "font-awesome": "~4.5.0",
     "jquery": "~2.2.0",
-    "prism": "git@github.com:LeaVerou/prism.git#gh-pages"
+    "prism": "https://github.com/PrismJS/prism/archive/gh-pages.zip"
   },
   "private": true,
   "devDependencies": {
